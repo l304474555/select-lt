@@ -1,0 +1,94 @@
+.select-lt {
+    width: 200px;
+    height: 30px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.select-lt .val-col {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid #c7d1e4;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.select-lt .val-col:hover {
+    border-color: yellow;
+}
+
+.select-lt .val-col input[type='text'] {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding-left: 8px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.select-lt .val-col:after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-width: 6px;
+    border-style: solid;
+    border-color: #000 transparent transparent transparent;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    /* margin-top: -3px; */
+    margin-top: -1%;
+}
+
+.select-lt.st-dropdown .val-col:after {
+    border-color: transparent transparent #000;
+    /* margin-top: -8px; */
+    margin-top: -5%;
+}
+
+.select-lt select {
+    height: 0 !important;
+    width: 0 !important;
+    opacity: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.select-lt .select-list {
+    width: 100%;
+    height: auto;
+    background: #fff;
+    border: 1px solid #c7d1e4;
+    padding: 0;
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 35px;
+    z-index: 99;
+    margin: 0;
+}
+
+.select-lt.st-dropdown .select-list {
+    display: block;
+}
+
+.select-lt .select-list li {
+    list-style-type: none;
+    padding: 5px;
+    color: #000;
+    border: 1px solid #fff;
+}
+
+.select-lt .select-list li.active {
+    border-color: seagreen;
+}
+
+.select-lt .select-list li:hover {
+    color: #fff;
+    background: #5897fb;
+    border-color: #5897fb;
+}
