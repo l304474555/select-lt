@@ -13,8 +13,45 @@
     <style>
         .select-lt {
             margin: 50px auto;
+            display: block;
         }
     </style>
+    <div class="mySelect select-lt">
+        <div class="val-col"><input type="text" readonly="" placeholder="动态加载数据">
+            <select placeholder="你在说啥">
+                <option value="">请选择</option>
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option> 
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option> 
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+            </select>
+        </div>
+        <div class="select-list">
+            <input type="text" placeholder="输入关键字" class="filtrate-input">
+            <ul class="" style="top: 35px;">
+                <li data-value="">请选择</li>
+                <li data-value="a">A</li>
+                <li data-value="b">B</li>
+                <li data-value="c" class="active">C</li><li data-value="a">A</li>
+                <li data-value="b">B</li><li data-value="a">A</li>
+                <li data-value="b">B</li><li data-value="a">A</li>
+                <li data-value="b">B</li><li data-value="a">A</li>
+                <li data-value="b">B</li><li data-value="a">A</li>
+                <li data-value="b">B</li><li data-value="a">A</li>
+                <li data-value="b">B</li><li data-value="a">A</li>
+                <li data-value="b">B</li>
+                
+            </ul>
+        </div>        
+    </div>
     <div class="select-lt" id="mySelect">
         <select placeholder="动态加载数据" id="select">
         </select>
@@ -27,7 +64,7 @@
             <option value="xiaohong">小红</option>
         </select>
     </div>
-    <div class="select-lt">
+    <div class="mySelect select-lt">
         <select placeholder="静态加载数据">
             <option value="">请选择</option>
             <option value="xiaoming">熊猫</option>
@@ -38,15 +75,22 @@
     <script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
     <script src="./select-lt.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
+            $('.mySelect').selectlt({
+                isfiltration:true
+            });
             $('#select').html('<option value="">请选择</option>\
                     <option value="a">A</option>\
                     <option value="b">B</option>\
                     <option value="c">C</option>');
             //初始化
-            $('#mySelect').selectlt('init');
+            $('#mySelect').selectlt('init', {
+                aa: '1',
+                bb: '2',
+                isfiltration:true
+            });
             //选中事件
-            $('#mySelect').on('select-change', function(e, data) {
+            $('#mySelect').on('select-change', function (e, data) {
                 console.log(e, data);
             });
             //设置选中项
@@ -55,7 +99,7 @@
                 获取select选中项
             */
             //1，通过组件的函数方式获取
-            $('#mySelect').selectlt('getSelected', function(data) {
+            $('#mySelect').selectlt('getSelected', function (data) {
                 console.log('选中项:', data);
             });
             //2，通过select原生方式获取
