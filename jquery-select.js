@@ -81,23 +81,22 @@
                             $(this).find('.select-list-b').css('top', elementHeight);                        
                         });
                        
-                        $element.on('keyup', '.filtrate-input',function(e){
-                            e.stopPropagation();
+                        $element.on('keyup', '.filtrate-input', throttle(function(e){
+                            e.stopPropagation(); 
                             $element.find('li').removeClass('active');
                             $element.find('select').val('show-placeholder');
                             $valInput.val('');
-                            var keyword = $(this).val().trim();
                             $ul.empty().html(backupsUlHtml);
-                            var tepli = '';
+                            var tepli = '',keyword = $(this).val().trim();
                             if(keyword != ''){
                                 $ul.find('li').each(function(){
-                                    if($(this).text().indexOf(keyword) > -1){
-                                        tepli+=$(this).context.outerHTML
+                                    if($(this).text().trim().indexOf(keyword) > -1){
+                                        tepli+= $(this).context.outerHTML;
                                     }
                                 }); 
                                 $ul.empty().html(tepli);
-                            }                                          
-                        });
+                            }    
+                        },800));
                         $element.on('click', '.select-list-b',function(e){
                             e.stopPropagation();
                         });
@@ -127,7 +126,19 @@
                 return data;
             }
         }
-
+        function throttle(func, delay) {
+            var run = true;
+            return function () {
+              if (!run) {
+                return;
+              }
+              run = false;
+              setTimeout(() => {
+                func.apply(this, arguments);
+                run = true;
+              }, delay);
+            }
+        }
         if (methods[method])
             return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
         else if (typeof method === 'object' || !method)
