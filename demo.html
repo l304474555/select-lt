@@ -41,24 +41,7 @@
                 <option value="b">B</option>
                 <option value="c">C</option>
             </select>
-        </div>
-        <div class="select-list">
-            <input type="text" placeholder="输入关键字" class="filtrate-input">
-            <ul class="" style="top: 35px;">
-                <li data-value="">请选择</li>
-                <li data-value="a">A</li>
-                <li data-value="b">B</li>
-                <li data-value="c" class="active">C</li><li data-value="a">A</li>
-                <li data-value="b">B</li><li data-value="a">A</li>
-                <li data-value="b">B</li><li data-value="a">A</li>
-                <li data-value="b">B</li><li data-value="a">A</li>
-                <li data-value="b">B</li><li data-value="a">A</li>
-                <li data-value="b">B</li><li data-value="a">A</li>
-                <li data-value="b">B</li><li data-value="a">A</li>
-                <li data-value="b">B</li>
-                
-            </ul>
-        </div>        
+        </div> 
     </div>
    
     <div class="mySelect select-lt">
@@ -85,11 +68,9 @@
                 getSelected  获取当前选中项
             */
             $('.mySelect').selectlt({
-                isfiltration:true,
                 isdisabled:false
             });
-           var mySelect = $('#mySelect').selectlt({
-                isfiltration:true,
+            var mySelect = $('#mySelect').selectlt({
                 selectedValue:'xiaohuang'
             })
             //选中事件
