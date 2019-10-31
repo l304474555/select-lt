@@ -5,7 +5,9 @@
         var methods = {
             init: function(option) {
                 option = $.extend({},{
-                    isfiltration:false
+                    selectedValue:undefined,
+                    isfiltration:false, //是否开启条件搜索
+                    isdisabled:false  //是否禁用
                 },option)
                 return this.each(function() {
                     var $element = $(this),
@@ -16,7 +18,7 @@
                     $valCol = $('<div>').addClass('val-col');
                     $valInput = $('<input type="text" readonly>');
                     
-                    $selectList = $('<div class="select-list">');
+                    $selectList = $('<div class="select-list-b">');
                     $ul = $('<ul>');
                     
                     if ($select.is('[placeholder]')) {
@@ -43,16 +45,6 @@
                     $selectList.append($ul);
                     $element.append($valCol).append($selectList);
                     $element.unbind();
-                    $element.on('click', function(e) {
-                        e.stopPropagation();
-                        if ($(this).hasClass('st-dropdown')) {
-                            $(this).removeClass('st-dropdown');
-                        } else {
-                            $(this).addClass('st-dropdown');
-                        }
-                        var elementHeight = $(this).outerHeight() + 5;
-                        $(this).find('.select-list').css('top', elementHeight);                        
-                    });
                     $element.on('click', 'li', function(e) {
                         e.stopPropagation();
                         var $el = $(this);
@@ -73,34 +65,51 @@
                             }
                         });
                     });
-                    $element.on('keyup', '.filtrate-input',function(e){
-                        e.stopPropagation();
-                        $element.find('li').removeClass('active');
-                        $element.find('select').val('show-placeholder');
-                        $valInput.val('');
-                        var keyword = $(this).val().trim();
-                        $ul.empty().html(backupsUlHtml);
-                        var tepli = '';
-                        if(keyword != ''){
-                            $ul.find('li').each(function(){
-                                if($(this).text().indexOf(keyword) > -1){
-                                    tepli+=$(this).context.outerHTML
-                                }
-                            }); 
-                            $ul.empty().html(tepli);
-                        }                                          
-                    });
-                    $element.on('click', '.select-list',function(e){
-                        e.stopPropagation();
-                    });
-                    $(document).bind('click',function(e){
-                        var target = $(e.target)
-                        if(target.closest('.select-lt').length === 0){
-                            $('.select-lt').removeClass('st-dropdown')
-                        }else{
-                            $element.addClass('st-dropdown')
-                        }
-                    })
+
+                    if(option.selectedValue !== undefined){
+                        $element.find('li[data-value=' + option.selectedValue + ']').trigger('click');
+                    }
+                    if(!option.isdisabled){
+                        $element.on('click', function(e) {
+                            e.stopPropagation();
+                            if ($(this).hasClass('st-dropdown')) {
+                                $(this).removeClass('st-dropdown');
+                            } else {
+                                $(this).addClass('st-dropdown');
+                            }
+                            var elementHeight = $(this).outerHeight() + 5;
+                            $(this).find('.select-list-b').css('top', elementHeight);                        
+                        });
+                       
+                        $element.on('keyup', '.filtrate-input',function(e){
+                            e.stopPropagation();
+                            $element.find('li').removeClass('active');
+                            $element.find('select').val('show-placeholder');
+                            $valInput.val('');
+                            var keyword = $(this).val().trim();
+                            $ul.empty().html(backupsUlHtml);
+                            var tepli = '';
+                            if(keyword != ''){
+                                $ul.find('li').each(function(){
+                                    if($(this).text().indexOf(keyword) > -1){
+                                        tepli+=$(this).context.outerHTML
+                                    }
+                                }); 
+                                $ul.empty().html(tepli);
+                            }                                          
+                        });
+                        $element.on('click', '.select-list-b',function(e){
+                            e.stopPropagation();
+                        });
+                        $(document).on('click',function(e){
+                            var target = $(e.target)
+                            if(target.closest('.select-lt').length === 0){
+                                $('.select-lt').removeClass('st-dropdown')
+                            }else if(target.closest($element).length === 1){
+                                $element.addClass('st-dropdown')
+                            }
+                        });
+                    }
                 })
             },
             setSelected(val) {

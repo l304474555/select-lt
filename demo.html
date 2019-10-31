@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>演示</title>
-    <link rel="stylesheet" href="./select-lt.css">
+    <link rel="stylesheet" href="./jquery-select.css">
 </head>
 
 <body>
@@ -16,6 +16,14 @@
             display: block;
         }
     </style>
+    <div class="select-lt" id="mySelect">
+        <select placeholder="加载数据" id="select">
+            <option value="">请选择</option>
+            <option value="xiaoming">熊猫</option>
+            <option value="xiaohuang">大黄蛇</option>
+            <option value="xiaohong">大鱼</option>
+        </select>
+    </div>
     <div class="mySelect select-lt">
         <div class="val-col"><input type="text" readonly="" placeholder="动态加载数据">
             <select placeholder="你在说啥">
@@ -52,59 +60,56 @@
             </ul>
         </div>        
     </div>
-    <div class="select-lt" id="mySelect">
-        <select placeholder="动态加载数据" id="select">
-        </select>
-    </div>
-    <div class="select-lt" style="height:50px;">
-        <select placeholder="静态加载数据">
-            <option value="">请选择</option>
-            <option value="xiaoming">小明</option>
-            <option value="xiaohuang">小黄</option>
-            <option value="xiaohong">小红</option>
-        </select>
-    </div>
+   
     <div class="mySelect select-lt">
         <select placeholder="静态加载数据">
             <option value="">请选择</option>
             <option value="xiaoming">熊猫</option>
-            <option value="xiaohuang" selected>大黄蛇</option>
+            <option value="xiaohuang">大黄蛇</option>
             <option value="xiaohong">大鱼</option>
         </select>
     </div>
     <script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-    <script src="./select-lt.js"></script>
+    <script src="./jquery-select.js"></script>
     <script>
         $(document).ready(function () {
+            /*
+                参数
+                isfiltration 是否开启搜索功能
+                isdisabled 是否禁用
+                selectedValue 默认选中的值
+
+                事件
+                select-change 下拉选中事件
+                setSelected  设置默认值
+                getSelected  获取当前选中项
+            */
             $('.mySelect').selectlt({
-                isfiltration:true
+                isfiltration:true,
+                isdisabled:false
             });
-            $('#select').html('<option value="">请选择</option>\
-                    <option value="a">A</option>\
-                    <option value="b">B</option>\
-                    <option value="c">C</option>');
-            //初始化
-            $('#mySelect').selectlt('init', {
-                aa: '1',
-                bb: '2',
-                isfiltration:true
-            });
+           var mySelect = $('#mySelect').selectlt({
+                isfiltration:true,
+                selectedValue:'xiaohuang'
+            })
             //选中事件
-            $('#mySelect').on('select-change', function (e, data) {
+            mySelect.on('select-change', function (e, data) {
                 console.log(e, data);
             });
             //设置选中项
-            $('#mySelect').selectlt('setSelected', 'c');
+            //mySelect.selectlt('setSelected', 'xiaohong');
+
+
             /**
                 获取select选中项
             */
             //1，通过组件的函数方式获取
-            $('#mySelect').selectlt('getSelected', function (data) {
+            mySelect.selectlt('getSelected', function (data) {
                 console.log('选中项:', data);
             });
-            //2，通过select原生方式获取
+            //2，通过select获取
             var selectedValue = $('#select').val();
-            console.log('选中项:', selectedValue);
+            console.log('选中值:', selectedValue);
             //或
             var $selectedOption = $('#select option:selected');
             console.log('选中项值:', $selectedOption.val());
